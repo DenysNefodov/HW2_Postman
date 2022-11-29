@@ -295,9 +295,115 @@ for (let i = 0; i < resp.salary.length; i++) {
 }
 ```
 ***
+***http://162.55.220.72:5005/user_info_2***
 
+**Отправить запрос + статус код 200**
 ```JavaScript
-
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
 ```
+**Спарсить response body в json.**
+```JavaScript
+let resp = pm.response.json();
+```
+**Спарсить request.**
+```JavaScript
+let req =  request.data;
+let req_salary = +req.salary
+```
+**Проверить, что json response имеет параметр start_qa_salary**
+```JavaScript
+pm.test("Start QA Salary in JSON", function () {
+    pm.expect(resp).haveOwnProperty("start_qa_salary");
+});
+```
+**Проверить, что json response имеет параметр qa_salary_after_6_months**
+```JavaScript
+pm.test("Response has QA Salary after 6 month in JSON", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_6_months");
+});
+```
+**Проверить, что json response имеет параметр qa_salary_after_12_months**
+```JavaScript
+pm.test("Response has QA Salary after 12 month in JSON", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_12_months");
+});
+```
+**Проверить, что json response имеет параметр qa_salary_after_1.5_year**
+```JavaScript
+pm.test("Response has QA Salary after 1.5 year in JSON", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_1.5_year");
+});
+```
+**Проверить, что json response имеет параметр qa_salary_after_3.5_years**
+```JavaScript
+pm.test("Response has QA Salary after 3.5 years in JSON", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_3.5_years");
+});
+```
+**Проверить, что json response имеет параметр person**
+```JavaScript
+pm.test("Response has person params", function () {
+    pm.expect(resp).haveOwnProperty("person");
+});
+```
+**Проверить, что параметр start_qa_salary равен salary из request (salary забрать из request.)**
+```JavaScript
+pm.test("start_qa_salary = salary from request", function () {
+    pm.expect(resp.start_qa_salary).to.eql(+req.salary)
+});
+```
+**Проверить, что параметр qa_salary_after_6_months равен salary*2 из request (salary забрать из request.)**
+```JavaScript
+pm.test("qa_salary_after_6_months = salary*2 from request", function () {
+    pm.expect(resp.qa_salary_after_6_months).to.eql(+req.salary * 2)
+});
+```
+**Проверить, что параметр qa_salary_after_12_months равен salary*2.7 из request (salary забрать из request.)**
+```JavaScript
+pm.test("qa_salary_after_6_months = salary*2 from request", function () {
+    pm.expect(resp.qa_salary_after_12_months).to.eql(+req.salary * 2.7)
+});
+```
+**Проверить, что параметр qa_salary_after_1.5_year равен salary*3.3 из request (salary забрать из request.)**
+```JavaScript
+pm.test("qa_salary_after_1.5_year = salary*3.3 from request", function () {
+    pm.expect(resp['qa_salary_after_1.5_year']).to.eql(+req.salary * 3.3)
+});
+```
+**Проверить, что параметр qa_salary_after_3.5_years равен salary*3.8 из request (salary забрать из request.)**
+```JavaScript
+pm.collectionVariables.set("qa_salary_after_3.5_years", +req.salary*3.8);
+pm.test("qa_salary_after_3.5_years = salary*3.8 from request", function () {
+    pm.expect(+req.salary * 3.8).to.eql(pm.collectionVariables.get("qa_salary_after_3.5_years"))
+});
+```
+**Проверить, что в параметре person, 1-й элемент из u_name равен salary из request (salary забрать из request.)**
+```JavaScript
+pm.test("Person from u_name[1] = salary from request", function () {
+    pm.expect(resp.person.u_name[1]).to.eql(+req.salary);
+});
+```
+**Проверить, что что параметр u_age равен age из request (age забрать из request.)**
+```JavaScript
+pm.test("Params u_age = age from request", function () {
+    pm.expect(resp.person.u_age).to.eql(+req.age);
+});
+```
+**Проверить, что параметр u_salary_5_years равен salary*4.2 из request (salary забрать из request.)**
+```JavaScript
+pm.test("u_salary_5_years = salary*4.2 from request", function () {
+    pm.expect(resp.person.u_salary_5_years).to.eql(+req.salary * 4.2)
+});
+```
+**Написать цикл который выведет в консоль по порядку элементы списка из параметра person.**
+```JavaScript
+let resp_person = pm.response.json()
+for (let key in resp_person) {
+    console.log (key, resp_person[key])
+}
+```
+
 
 
